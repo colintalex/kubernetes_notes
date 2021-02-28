@@ -4,6 +4,7 @@
 - Scalability/ high performance
 - Disaster Recovery, backup and restore
 
+<hr>
 
 ## Architecture
 
@@ -36,10 +37,14 @@ Final component of Kubernetes, which enables those nodes to talk to each other, 
 
 **This requires the connection to a master node, so backups of the master node are encouraged in production to ensure smooth operation**
 
-## K8's Components
+<br>
+
+# K8's Components
 There are tons of components, but most of the time you will only be using a handful of them. 
 
-### Node and Pod
+<hr>
+
+## Node and Pod
 Assume you have a worker node (server, physical machine)
 Pod resides within a node. 
 - Smallest unit in Kubernetes
@@ -54,7 +59,9 @@ How They Communicate in the Kubernetes World
     - Say app ran out of resources, and pod dies. Then new is put in place. Now you have a new IP address :( 
 - Because of this, we use Service. 
 
-### Service and Ingres
+<hr>
+
+## Service and Ingres
 Setting of a permanent IP address to each pod. 
 The lifecycles of the pod and the service are not connected, so when a pod dies the IP address does not change!
 
@@ -72,12 +79,13 @@ But you want it to look like this for production
 https://myapp.com
 ```
 
-In comes the **Ingres**
+In comes the **Ingres**, which routes the traffic into the cluster.
 
 So first the request hits the Ingres, then the Service. 
 
+<hr>
 
-## Config Map and Secrets
+## Config Map and Secrets (External Config)
 In recap, pods communicate with each other using services. Many config urls such as database urls are bult into the application, so any small changes would require a tedious amount of work to make the adjustments to production. 
 
 ConfigMap is an external configuration of your application.
@@ -91,9 +99,11 @@ This could be changed easily in the ConfigMap without any tedious changes.
 You may also have user and credentials, so for this we can use the component **Secret**
 
 ### Secret
-- used to store secret data
+- Used to store secret data
 - Base64 encoded
 - **Not enabled by default**
+
+<hr>
 
 ## Volumes
 If a database pod get's restarted, the data would be gone!
@@ -107,11 +117,15 @@ Volumes come into play.
 Now when the db pod service gets restarted, the data persists. 
 The storage is always an external hard drive plugged into the K*'s cluster, K8's doesn't manage data persistence. 
 
+<hr>
+
 ## Deployment Stateful Set
 
+Stateful sets are rough to handle across replicas, so it's good practice to host the DB outside of the K8's cluster.
 
+<br><br>
 
-## KubeCTL
+# KubeCTL
 ```
 minikube start --vm-driver=hyperkit
 ```
